@@ -1,9 +1,14 @@
 <script setup>
-
+  import { RouterView } from "vue-router";
+  import Nav from "./components/Nav.vue";
 </script>
 
 <template>
-  <h1>Api - Login</h1>
+  
+  <main>
+    <Nav></Nav>
+      <RouterView></RouterView>
+  </main>
 </template>
 
 
