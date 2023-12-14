@@ -14,28 +14,47 @@ use Illuminate\Validation\Rules;
 class RegisteredUserController extends Controller
 {
     /**
-     * Handle an incoming registration request.
+     * Handle an incoming registration request
      *
      * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request): Response
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+        try {
+            
+            $request->validate([
+                'name' => ['required', 'string', 'max:255'],
+                'last_name' => ['required', 'string', 'max:255'],
+                'identificacion' => ['required', 'unique:'.User::class],
+                'is_profesional' => ['required'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+                //'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            ]);
+    
+            $user = User::create([
+                'name' => $request->name,
+                'last_name' => $request->last_name,
+                'identificacion' => $request->identificacion,
+                'celular' => $request->celular,
+                'ubicacion' => $request->ubicacion,
+                'is_profesional' => $request->is_profesional,
+                'email' => $request->email,
+                'password' => Hash::make($request->identificacion),
+            ]);
+    
+            event(new Registered($user));
+    
+            Auth::login($user);
+    
+            return response()->noContent();
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        } catch (\Throwable $th) {
+            //throw $th;
 
-        event(new Registered($user));
+            return response($th);
+        }
+        
 
-        Auth::login($user);
-
-        return response()->noContent();
     }
+
 }
