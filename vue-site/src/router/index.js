@@ -11,6 +11,12 @@ const routes = [
     },
 
     { 
+        path: "/guest", 
+        name: 'Guest', 
+        component: () => import("../components/Guest.vue") 
+    },
+
+    { 
         path: "/login", 
         name: 'Login',
         component: () => import("../components/Login.vue") 
@@ -20,6 +26,24 @@ const routes = [
         path: "/register", 
         name: 'Register',
         component: () => import("../components/Register.vue") 
+    },
+
+    { 
+        path: "/profesional/:id", 
+        name: 'Historia',
+        component: () => import("../components/profesional/Historia.vue") 
+    },
+
+    { 
+        path: "/profesional/create/:id", 
+        name: 'CreateHistoria',
+        component: () => import("../components/profesional/Create.vue") 
+    },
+
+    { 
+        path: "/paciente/edit/:id", 
+        name: 'FirmarHistoria',
+        component: () => import("../components/paciente/Edit.vue") 
     },
 
 ];

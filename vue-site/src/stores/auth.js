@@ -11,6 +11,10 @@ export const useAuthStore = defineStore("auth", {
 
         authErrors: [],
 
+        pacientes: [],
+
+        paciente: null,
+
     }),
 
     getters: {
@@ -40,6 +44,35 @@ export const useAuthStore = defineStore("auth", {
 
         },
 
+        async getPaciente(id){
+
+            const data = await axios.get(`/api/paciente/${id}`);
+
+            this.paciente = data.data;
+
+            //console.log(this.paciente);
+
+        },
+
+        async getPacientes() {
+
+            await axios.get("/api/pacientes")
+
+            .then(response => {
+
+                this.pacientes = response.data
+
+                //console.log(this.pacientes);
+
+            })
+
+            .catch(error => {
+
+                console.log(error);
+
+            })
+        },
+
         async handleLogin(data){
             
             await this.getToken();
@@ -53,8 +86,8 @@ export const useAuthStore = defineStore("auth", {
                     is_profesional: data.is_profesional
         
                 });
-    
-                this.router.push("/");
+
+                this.router.push("/");               
 
             } catch (error) {
                                 
