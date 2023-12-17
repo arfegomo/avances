@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('celular')->nullable();;
             $table->string('ubicacion')->nullable();;
             $table->boolean('is_profesional')->default(false);
+            $table->timestamp('password_change_at')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

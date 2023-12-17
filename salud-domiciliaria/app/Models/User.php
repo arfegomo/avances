@@ -26,6 +26,7 @@ class User extends Authenticatable
         'is_profesional',
         'email',
         'password',
+        'password_change_at'
     ];
 
     /**

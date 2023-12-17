@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
 
 class UserController extends Controller
 {
@@ -26,14 +28,14 @@ class UserController extends Controller
         return response()->json($paciente);
 
     }
-
+    
     public function update(Request $request, $id)
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', Rule::unique('users')->ignore($id)],
-            //'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
          $user = User::find($id);  
@@ -46,12 +48,34 @@ class UserController extends Controller
          if($request->get('password') != null){
          
             $user->password = Hash::make($request->get('password'));
+            $user->password_change_at = Carbon::now();
 
         }else{
 
          unset($user->password);   
          
         }
+        
+        $user->save();
+
+        return response()->json([
+
+            "user" => $user
+
+        ]);        
+
+    }
+
+    public function passwordChange(Request $request, $id)
+    {
+        $request->validate([
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+
+        $user = User::find($id);           
+         
+        $user->password = Hash::make($request->get('password'));
+        $user->password_change_at = Carbon::now();
         
         $user->save();
 

@@ -52,6 +52,12 @@ const routes = [
         component: () => import("../components/Perfil.vue") 
     },
 
+    { 
+        path: "/password/edit/:id", 
+        name: 'ChangePassword',
+        component: () => import("../components/ChangePassword.vue") 
+    },
+
 ];
 
 const router = createRouter({

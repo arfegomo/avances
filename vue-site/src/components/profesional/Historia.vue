@@ -47,71 +47,74 @@
             </div>                
         </div>        
         
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                    
-                    <th scope="col" class="px-6 py-3">
-                        ID Historia
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Fecha
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Profesional
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Concepto
-                    </th>                
-                    <th scope="col" class="px-6 py-3">
-                        Estado
-                    </th>                        
-                    <th scope="col" class="px-6 py-3">
-                        Antecedentes
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Evolución
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Recomendaciones
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                
-                <tr v-for="historia in historiaStore.historiasPaciente" :key="historia.id" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    
-                    <td class="px-6 py-4">
-                        {{ historia.id }}
-                    </td>
-                    <td class="px-6 py-4">
-                        {{ historia.created_at }}
-                    </td>
-                    <td class="px-6 py-4">
-                        {{ historia.profesional.name }} {{ historia.profesional.last_name }}
-                    </td>
-                    
-                    <td class="px-6 py-4">
-                        {{ historia.concepto }}
-                    </td>
-                    <td v-if="historia.estado == 0" class="px-6 py-4">
-                        Sin firmar
-                    </td>
-                    <td v-if="historia.estado == 1" class="px-6 py-4">
-                        Firmado
-                    </td>
-                    <td class="px-6 py-4">
-                        {{ historia.antecedentes }}
-                    </td>
-                    <td class="px-6 py-4">
-                        {{ historia.evolucion }}
-                    </td>
-                    <td class="px-6 py-4">
-                        {{ historia.recomendaciones }}
-                    </td>
-                </tr>
- 
-            </tbody>
-        </table>
+        <div class="container p-2 mx-auto sm:p-4 dark:text-gray-100">
+        		<h2 class="mb-4 text-2xl font-semibold leadi">Historias</h2>
+                    <div class="overflow-x-auto">
+                    <table class="w-full p-6 text-xs text-left whitespace-nowrap">
+                        <colgroup>
+                            <col class="w-5">
+                            <col>
+                            <col>
+                            <col>
+                            <col>
+                            <col>
+                            <col class="w-5">
+                        </colgroup>
+                        <thead>
+                            <tr class="bg-teal-400">
+                                <th class="p-3">ID Historia</th>
+                                <th class="p-3">Fecha</th>
+                                <th class="p-3">Paciente</th>
+                                <th class="p-3">Profesional</th>
+                                <th class="p-3">Concepto</th>
+                                <th class="p-3">Estado</th>
+                                <th class="p-3">Antecedentes</th>
+                                <th class="p-3">Evolución</th>
+                                <th class="p-3">Recomendaciones</th>
+                                <th class="p-3">
+                                    <span class="sr-only">Actions</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="border-b dark:bg-gray-900 dark:border-gray-700">
+                            <tr v-for="historia in historiaStore.historiasPaciente" :key="historia.id">
+                                <td class="px-3 text-2xl font-medium dark:text-gray-400">{{ historia.id }}</td>
+                                <td class="px-3 py-2">
+                                    <p>{{ historia.created_at }}</p>
+                                </td>
+                                <td class="px-3 py-2">
+                                    <span>{{ historia.paciente.name }}</span>
+                                    <p class="dark:text-gray-400">{{ historia.paciente.last_name }}</p>
+                                </td>
+                                <td class="px-3 py-2">
+                                    <p>{{ historia.profesional.name }} {{ historia.profesional.last_name }}</p>
+                                </td>
+                                <td class="px-3 py-2">
+                                    <p>{{ historia.concepto }}</p>
+                                </td>
+                                <td v-if="historia.estado == 0" class="px-3 py-2">
+                                    <p>Sin firmar</p>
+                                    
+                                </td>
+                                <td v-if="historia.estado == 1" class="px-3 py-2">
+                                    <p>Firmado</p>
+                                    
+                                </td>
+                                <td class="px-3 py-2">
+                                    <p>{{ historia.antecedentes }}</p>
+                                </td>
+                                <td class="px-3 py-2">
+                                    <p>{{ historia.evolucion }}</p>
+                                </td>
+                                <td class="px-3 py-2">
+                                    <p>{{ historia.recomendaciones }}</p>
+                                </td> 
+           
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
+	        </div>  
+
       </div>
 </template>

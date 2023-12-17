@@ -114,7 +114,8 @@ export const useAuthStore = defineStore("auth", {
                     email: this.usuario.email,
                     celular: this.usuario.celular,
                     ubicacion: this.usuario.ubicacion,
-                    password: form.password                    
+                    password: form.password,
+                    password_confirmation: form.password_confirmation                    
 
                 })
 
@@ -202,6 +203,34 @@ export const useAuthStore = defineStore("auth", {
             this.router.push("/login");
         },
 
-    }
+        async passwordChange(data){
+
+            this.authErrors = [];
+
+            await this.getToken();
+
+            try {
+                
+                await axios.put(`/api/password-change/${data.id}`, {
+    
+                    password: data.password,
+                    password_confirmation: data.password_confirmation
+        
+                });
+                 
+                this.router.push("/");
+
+            } catch (error) {
+                
+                if(error.response.status === 422){
+
+                    this.authErrors = error.response.data.errors;
+
+                }
+            }
+        }
+
+    },
+
 
 });
