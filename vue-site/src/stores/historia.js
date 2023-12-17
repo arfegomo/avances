@@ -43,6 +43,8 @@ export const useHistoriaStore = defineStore("historia", {
 
         async crear(data){
 
+            this.historiaErrors = [];
+
             try {
                 
                 await axios.post("/api/historia", {

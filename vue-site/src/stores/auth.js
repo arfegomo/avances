@@ -15,6 +15,8 @@ export const useAuthStore = defineStore("auth", {
 
         paciente: null,
 
+        usuario: []
+
     }),
 
     getters: {
@@ -73,7 +75,64 @@ export const useAuthStore = defineStore("auth", {
             })
         },
 
+        async showUser(id){
+
+            await axios.get(`/api/user-show/${id}`)
+
+            .then(response => {
+
+                const { name, last_name, identificacion, email, ubicacion, celular } = response.data
+
+                this.usuario.name = name;
+                this.usuario.last_name = last_name;
+                this.usuario.identificacion = identificacion;
+                this.usuario.email = email;
+                this.usuario.ubicacion = ubicacion;
+                this.usuario.celular = celular;
+
+                //console.log(response.data)
+
+            })
+
+            .catch(error => {
+
+                console.log(error);
+
+            })
+        },
+
+        async actualizar(form){
+
+            this.authErrors = [];
+
+            try {
+                
+                await axios.put(`/api/user-update/${form.id}`, {
+
+                    name: this.usuario.name,
+                    last_name: this.usuario.last_name,
+                    email: this.usuario.email,
+                    celular: this.usuario.celular,
+                    ubicacion: this.usuario.ubicacion,
+                    password: form.password                    
+
+                })
+
+                this.router.push("/");
+
+            } catch (error) {
+                
+                if(error.response.status === 422){
+
+                    this.authErrors = error.response.data.errors;
+                    
+                }
+            }
+        },
+
         async handleLogin(data){
+
+            this.authErrors = [];
             
             await this.getToken();
     
@@ -90,7 +149,7 @@ export const useAuthStore = defineStore("auth", {
                 this.router.push("/");               
 
             } catch (error) {
-                                
+                   
                 if(error.response.status === 422){
 
                     this.authErrors = error.response.data.errors;
@@ -102,6 +161,8 @@ export const useAuthStore = defineStore("auth", {
         },
 
         async handleRegister(data){
+
+            this.authErrors = [];
 
             await this.getToken();
 

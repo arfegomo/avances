@@ -46,6 +46,12 @@ const routes = [
         component: () => import("../components/paciente/Edit.vue") 
     },
 
+    { 
+        path: "/perfil/edit/:id", 
+        name: 'Perfil',
+        component: () => import("../components/Perfil.vue") 
+    },
+
 ];
 
 const router = createRouter({

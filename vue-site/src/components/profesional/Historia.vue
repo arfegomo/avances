@@ -15,7 +15,7 @@
 
         await historiaStore.mostrarHistoriasPaciente(route.params.id);
 
-        await authStore.getPaciente(route.params.id);
+        await authStore.showUser(route.params.id);
 
     });
 
@@ -40,7 +40,10 @@
             <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
             </svg>
             <div class="ms-3 text-sm font-medium">
-                Listado de historias
+                Listado de historias: {{authStore.usuario.name}}
+            </div>                
+            <div class="ms-3 text-sm font-medium">
+                Identificación: {{authStore.usuario.identificacion}}
             </div>                
         </div>        
         
@@ -53,9 +56,6 @@
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Fecha
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Paciente
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Profesional
@@ -86,9 +86,6 @@
                     </td>
                     <td class="px-6 py-4">
                         {{ historia.created_at }}
-                    </td>
-                    <td class="px-6 py-4">
-                        {{ historia.paciente.name }} {{ historia.paciente.last_name }}
                     </td>
                     <td class="px-6 py-4">
                         {{ historia.profesional.name }} {{ historia.profesional.last_name }}
