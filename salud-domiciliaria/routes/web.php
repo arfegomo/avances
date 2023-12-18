@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\HistoriaChangedEvent;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,6 +16,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return ['Laravel' => app()->version()];
+});
+
+Route::get('/fire', function(){
+    event(new HistoriaChangedEvent);
+    return "Ok";
 });
 
 require __DIR__.'/auth.php';
